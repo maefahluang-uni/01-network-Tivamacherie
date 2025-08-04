@@ -23,6 +23,13 @@ public class MockWebServerTest {
         // Start the mock web server before each test
         mockWebServer = new Thread(new MockWebServer(PORT));
         mockWebServer.start();
+        
+        // Give the server time to start
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @After
@@ -48,7 +55,6 @@ public class MockWebServerTest {
        String response;
        while ((response = in.readLine()) != null) {
         allresponse.append(response+lineSeparator);
-
        }
 
        Assert.assertEquals(TEST_RESPONSE, allresponse.toString());
@@ -57,6 +63,4 @@ public class MockWebServerTest {
        socket.close();
         // Assert that the response matches the expected response
     }
-
-
 }
